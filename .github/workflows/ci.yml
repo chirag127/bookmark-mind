@@ -1,54 +1,6 @@
-name: CI
-
-# Controls when the workflow will run
-# For more information see: https://docs.github.com/en/actions/using-workflows/about-workflows
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+name: ci
+on: [push, pull_request]
 jobs:
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository into the working environment
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Setup Node.js environment
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      # Install dependencies
-      - name: Install dependencies
-        run: npm ci
-
-      # Run linters and formatters (Biome)
-      - name: Lint and format with Biome
-        run: npm run lint
-
-      # Run tests (Vitest)
-      - name: Run tests
-        run: npm test
-
-      # Optional: Build the extension for distribution
-      # This step assumes you have a build script in your package.json
-      # e.g., "build": "vite build"
-      - name: Build extension
-        run: npm run build
-
-      # Optional: Upload build artifacts
-      # This step saves the built extension files for download
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: bookmarkmind-extension-build
-          path: dist/ # Adjust this path if your build output is different
+  ci:
+    uses: chirag127/workflows/.github/workflows/ci-browser-ext.yml@main
+    secrets: inherit

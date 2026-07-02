@@ -1,0 +1,11 @@
+{
+  "name": "ci",
+  "engineVersion": "v0.21.7",
+  "sdk": { "source": "typescript" },
+  "dependencies": [
+    {
+      "name": "ci",
+      "source": "github.com/chirag127/workflows/dagger/browser-ext@main"
+    }
+  ]
+}
