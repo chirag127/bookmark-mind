@@ -1,51 +1,50 @@
 {
     "name": "bookmarkmind",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "type": "module",
-    "description": "AI-powered Chrome bookmark organizer using Google Gemini API",
+    "description": "AI-powered Chrome bookmark organizer. Bring your own key for 12 built-in OpenAI-compatible providers (Groq, Gemini, Cerebras, OpenRouter, Mistral, HuggingFace, Ollama, LM Studio, LiteLLM, DeepSeek, Novita, OpenAI) or add any custom endpoint.",
     "main": "manifest.json",
     "scripts": {
         "build": "echo 'No build process needed - pure vanilla JS extension'",
-        "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-        "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest tests/features/**/*.test.js --testPathIgnorePatterns=e2e",
-        "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest tests/features/bookmarks/bookmarkService.test.js tests/features/bookmarks/folderManager.test.js",
-        "test:e2e": "NODE_OPTIONS=--experimental-vm-modules jest tests/features/ai/categorizer.e2e.test.js",
-        "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
-        "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest tests/features/lib/providers",
+        "test:providers": "cross-env NODE_OPTIONS=--experimental-vm-modules jest tests/features/lib/providers",
+        "test:all": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+        "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
+        "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
         "lint": "biome lint ./extension",
         "lint:fix": "biome lint --write ./extension",
         "format": "biome format --write ./extension",
         "format:check": "biome format ./extension",
         "check": "biome check --write ./extension",
-        "package": "zip -r bookmarkmind-v1.0.0.zip . -x '*.git*' 'node_modules/*' '*.zip' '*.md' 'package*.json' 'create_simple_icons.html' 'icons/create_icons.py'"
+        "package": "zip -r bookmarkmind-v1.1.0.zip . -x '*.git*' 'node_modules/*' '*.zip' '*.md' 'package*.json' 'create_simple_icons.html' 'icons/create_icons.py'"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bookmarkmind/bookmarkmind.git"
+        "url": "git+https://github.com/chirag127/bookmark-mind-bs-ext.git"
     },
     "keywords": [
         "chrome-extension",
         "bookmarks",
         "ai",
-        "organization",
-        "gemini",
-        "productivity",
-        "browser",
-        "automation"
+        "openai-compat",
+        "multi-provider",
+        "productivity"
     ],
-    "author": "BookmarkMind Team",
+    "author": "Chirag Singhal <chirag127@users.noreply.github.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/bookmarkmind/bookmarkmind/issues"
+        "url": "https://github.com/chirag127/bookmark-mind-bs-ext/issues"
     },
-    "homepage": "https://github.com/bookmarkmind/bookmarkmind#readme",
+    "homepage": "https://github.com/chirag127/bookmark-mind-bs-ext#readme",
     "engines": {
-        "node": ">=18.0.0"
+        "node": ">=20.0.0"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
+        "@jest/globals": "^30.2.0",
         "@testing-library/jest-dom": "^6.9.1",
         "chrome-types": "^0.1.384",
+        "cross-env": "^7.0.3",
         "jest": "^30.2.0",
         "jest-environment-jsdom": "^30.2.0",
         "sinon-chrome": "^3.0.1"
@@ -60,16 +59,18 @@
         ],
         "permissions": [
             "bookmarks",
-            "storage"
+            "storage",
+            "activeTab",
+            "tabs",
+            "notifications",
+            "alarms"
         ],
         "apiIntegrations": [
-            "Google Gemini API"
+            "OpenAI-compatible providers (12 built-in + custom)"
         ]
     },
     "directories": {
         "example": "examples"
     },
-    "dependencies": {
-        "@jest/globals": "^30.2.0"
-    }
+    "dependencies": {}
 }

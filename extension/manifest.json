@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "BookmarkMind - AI Bookmark Organizer",
-    "version": "1.0.0",
-    "description": "AI-powered bookmark organizer using Google Gemini API. Automatically categorizes and sorts your bookmarks into intelligent folders.",
+    "version": "1.1.0",
+    "description": "AI-powered bookmark organizer. Bring your own key for 12 built-in OpenAI-compatible providers (Groq, Gemini, Cerebras, OpenRouter, Mistral, HuggingFace, Ollama, LM Studio, LiteLLM, DeepSeek, Novita, OpenAI) or add any custom endpoint. Automatically categorizes bookmarks into intelligent folders.",
     "permissions": [
         "bookmarks",
         "storage",
@@ -12,9 +12,6 @@
         "alarms"
     ],
     "host_permissions": [
-        "https://generativelanguage.googleapis.com/*",
-        "https://api.cerebras.ai/*",
-        "https://api.groq.com/*",
         "<all_urls>"
     ],
     "background": {
@@ -37,5 +34,5 @@
         "128": "icons/icon128.png"
     },
     "author": "BookmarkMind Team",
-    "homepage_url": "https://github.com/bookmarkmind/bookmarkmind"
+    "homepage_url": "https://github.com/chirag127/bookmark-mind-bs-ext"
 }

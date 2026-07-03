@@ -41,186 +41,120 @@
                     </p>
                 </div>
 
-                <!-- Gemini Provider Section -->
-                <div class="provider-section">
-                    <h3 class="provider-heading">
-                        Gemini API Key (Required - Primary Provider)
-                    </h3>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="password" id="apiKey"
-                                placeholder="Enter your Gemini API key (starts with AIza...)" autocomplete="off" />
-                            <button type="button" id="clearApiKey" class="toggle-btn" title="Clear API Key"
-                                style="right: 40px">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                        fill="currentColor" />
-                                </svg>
-                            </button>
-                            <button type="button" id="toggleApiKey" class="toggle-btn" title="Show/Hide API Key">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
-                                        fill="currentColor" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="form-help">
-                            <p>
-                                Get your free API key from
-                                <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
-                            </p>
-                            <p>
-                                <strong>Tip:</strong> API keys start with
-                                "AIza" and are about 39 characters long. Use
-                                the clear button (Γ£ò) to enter a new key.
-                            </p>
-                            <div id="apiKeyStatus" class="status-indicator hidden">
-                                <span class="status-icon"></span>
-                                <span class="status-text"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" id="testGeminiKey" class="secondary-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z"
-                                    fill="currentColor" />
-                            </svg>
-                            Test Gemini Key
+                <!-- Multi-Provider AI Settings (v1.1.0+) -->
+                <div class="providers-panel" id="providersPanel">
+                    <p class="form-help" style="margin-bottom:1rem;">
+                        BookmarkMind supports any OpenAI-compatible LLM API. Add one or more
+                        providers below — the extension tries them in order (drag to reorder),
+                        falling back to the next when a call fails.
+                    </p>
+                    <div id="providerCards" class="provider-cards" role="list"
+                         aria-label="Configured AI providers"></div>
+                    <div class="form-actions" style="margin-top:1rem;">
+                        <button type="button" id="addProviderBtn" class="primary-btn">
+                            + Add Provider
                         </button>
-                        <button type="button" id="saveGeminiKey" class="primary-btn">
-                            Save Gemini Key
+                        <button type="button" id="addCustomProviderBtn" class="secondary-btn">
+                            + Custom (OpenAI-compat URL)
                         </button>
                     </div>
                 </div>
 
-                <!-- Cerebras Provider Section -->
-                <div class="provider-section" style="
-                            margin-top: 2rem;
-                            padding-top: 2rem;
-                            border-top: 1px solid #e0e0e0;
-                        ">
-                    <h3 class="provider-heading">
-                        Cerebras API Key (Optional - Fallback Provider)
-                    </h3>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="password" id="cerebrasApiKey"
-                                placeholder="Enter your Cerebras API key (starts with csk-...)" autocomplete="off" />
-                            <button type="button" id="clearCerebrasApiKey" class="toggle-btn"
-                                title="Clear Cerebras API Key" style="right: 40px">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                        fill="currentColor" />
-                                </svg>
-                            </button>
-                            <button type="button" id="toggleCerebrasApiKey" class="toggle-btn"
-                                title="Show/Hide Cerebras API Key">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
-                                        fill="currentColor" />
-                                </svg>
-                            </button>
+                <!-- Add Provider Modal -->
+                <div id="addProviderModal" class="modal hidden" role="dialog"
+                     aria-labelledby="addProviderModalTitle" aria-modal="true">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="addProviderModalTitle">Add Provider</h3>
+                            <button type="button" class="modal-close" data-close="addProviderModal"
+                                    aria-label="Close">&times;</button>
                         </div>
-                        <div class="form-help">
-                            <p>
-                                Get your API key from
-                                <a href="https://cloud.cerebras.ai/" target="_blank">Cerebras Cloud</a>
-                                (provides fallback if Gemini fails)
+                        <div class="modal-body">
+                            <label for="presetProviderSelect">Pick a provider</label>
+                            <select id="presetProviderSelect"></select>
+                            <div id="presetProviderNotes" class="form-help"
+                                 style="margin-top:.5rem;"></div>
+                            <label for="presetProviderKey" style="margin-top:1rem;">API key</label>
+                            <input type="password" id="presetProviderKey"
+                                   placeholder="Paste your API key" autocomplete="off"/>
+                            <p class="form-help">
+                                Get a key from
+                                <a id="presetProviderHomepage" href="#" target="_blank"
+                                   rel="noopener noreferrer">provider homepage</a>.
                             </p>
-                            <p>
-                                <strong>Tip:</strong> Cerebras API keys
-                                start with "csk-". This is optional but
-                                recommended for better reliability.
-                            </p>
-                            <div id="cerebrasApiKeyStatus" class="status-indicator hidden">
-                                <span class="status-icon"></span>
-                                <span class="status-text"></span>
-                            </div>
                         </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" id="testCerebrasKey" class="secondary-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z"
-                                    fill="currentColor" />
-                            </svg>
-                            Test Cerebras Key
-                        </button>
-                        <button type="button" id="saveCerebrasKey" class="primary-btn">
-                            Save Cerebras Key
-                        </button>
+                        <div class="modal-footer">
+                            <button type="button" class="secondary-btn"
+                                    data-close="addProviderModal">Cancel</button>
+                            <button type="button" id="savePresetProvider"
+                                    class="primary-btn">Save</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Groq API Key -->
-                <div class="form-group" style="
-                            margin-top: 2rem;
-                            padding-top: 2rem;
-                            border-top: 1px solid #e0e0e0;
-                        ">
-                    <label for="groqApiKey">Groq API Key (Optional - Quaternary
-                        Fallback)</label>
-                    <div class="input-group">
-                        <input type="password" id="groqApiKey"
-                            placeholder="Enter your Groq API key (starts with gsk_...)" autocomplete="off" />
-                        <button type="button" id="clearGroqApiKey" class="toggle-btn" title="Clear Groq API Key"
-                            style="right: 40px">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                    fill="currentColor" />
-                            </svg>
-                        </button>
-                        <button type="button" id="toggleGroqApiKey" class="toggle-btn" title="Show/Hide Groq API Key">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
-                                    fill="currentColor" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="form-help">
-                        <p>
-                            Get your API key from
-                            <a href="https://console.groq.com/" target="_blank">Groq Console</a>
-                            (provides additional fallback after Cerebras)
-                        </p>
-                        <p>
-                            <strong>Tip:</strong> Groq API keys start with
-                            "gsk_". This is optional but provides very fast
-                            inference speeds.
-                        </p>
-                        <div id="groqApiKeyStatus" class="status-indicator hidden">
-                            <span class="status-icon"></span>
-                            <span class="status-text"></span>
+                <!-- Add Custom Provider Modal -->
+                <div id="addCustomProviderModal" class="modal hidden" role="dialog"
+                     aria-labelledby="addCustomProviderModalTitle" aria-modal="true">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="addCustomProviderModalTitle">Add Custom Provider</h3>
+                            <button type="button" class="modal-close"
+                                    data-close="addCustomProviderModal"
+                                    aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="customProviderId">ID (kebab-case)</label>
+                            <input type="text" id="customProviderId"
+                                   placeholder="my-provider" pattern="[a-z0-9][a-z0-9-]*"
+                                   autocomplete="off"/>
+                            <label for="customProviderName">Display name</label>
+                            <input type="text" id="customProviderName"
+                                   placeholder="My Provider" autocomplete="off"/>
+                            <label for="customProviderBaseUrl">Base URL (no trailing /)</label>
+                            <input type="url" id="customProviderBaseUrl"
+                                   placeholder="https://api.example.com/v1"
+                                   autocomplete="off"/>
+                            <label for="customProviderDefaultModel">Default model</label>
+                            <input type="text" id="customProviderDefaultModel"
+                                   placeholder="model-name" autocomplete="off"/>
+                            <label for="customProviderAuthScheme">Auth scheme</label>
+                            <select id="customProviderAuthScheme">
+                                <option value="bearer">Bearer (Authorization header)</option>
+                                <option value="header">Custom header</option>
+                                <option value="query">Query parameter (?key=…)</option>
+                            </select>
+                            <div id="customAuthHeaderGroup" class="hidden">
+                                <label for="customProviderAuthHeader">Header name</label>
+                                <input type="text" id="customProviderAuthHeader"
+                                       placeholder="x-api-key" autocomplete="off"/>
+                            </div>
+                            <label for="customProviderKey" style="margin-top:1rem;">API key
+                                (leave blank for localhost/anonymous)</label>
+                            <input type="password" id="customProviderKey"
+                                   placeholder="Paste your API key" autocomplete="off"/>
+                            <p class="form-help">
+                                See
+                                <a href="#" id="customProviderDocsLink" target="_blank">provider
+                                docs</a> for the base URL. Examples: <code>LM Studio</code> uses
+                                <code>http://localhost:1234/v1</code>, <code>Ollama</code> uses
+                                <code>http://localhost:11434/v1</code>.
+                            </p>
+                            <div id="customProviderErrors" class="status-indicator hidden"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="secondary-btn"
+                                    data-close="addCustomProviderModal">Cancel</button>
+                            <button type="button" id="saveCustomProvider"
+                                    class="primary-btn">Save</button>
                         </div>
                     </div>
-                    <div class="form-actions">
-                        <button type="button" id="testGroqKey" class="secondary-btn" disabled>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z"
-                                    fill="currentColor" />
-                            </svg>
-                            Test Groq Key
-                        </button>
-                        <button type="button" id="saveGroqKey" class="primary-btn" disabled>
-                            Save Groq Key
-                        </button>
-                    </div>
+                </div>
+
+                <!-- Legacy hidden inputs kept for backwards-compat while migration runs -->
+                <div style="display:none;" aria-hidden="true">
+                    <input type="password" id="apiKey"/>
+                    <input type="password" id="cerebrasApiKey"/>
+                    <input type="password" id="groqApiKey"/>
                 </div>
             </section>
 
@@ -976,6 +910,7 @@
 
     <!-- Scripts -->
     <script type="module" src="settings.js"></script>
+    <script type="module" src="settings-providers.js"></script>
 </body>
 
 </html>
