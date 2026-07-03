@@ -4,3 +4,4 @@ jobs:
   ci:
     uses: chirag127/workflows/.github/workflows/ci-browser-ext.yml@main
     secrets: inherit
+# retrigger: 2026-07-03 (chirag127/workflows dagger fix)
