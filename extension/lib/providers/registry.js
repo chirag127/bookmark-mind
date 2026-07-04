@@ -164,6 +164,18 @@ export const PROVIDERS = Object.freeze([
     freeTier: 'byok',
     freeNotes: 'Route to any provider via self-hosted LiteLLM proxy. Edit baseUrl.',
     homepage: 'https://docs.litellm.ai/docs/proxy/quick_start'
+  },
+  {
+    id: 'omniroute',
+    displayName: 'OmniRoute (localhost)',
+    baseUrl: 'http://localhost:20128/v1',
+    chatPath: '/chat/completions',
+    modelsPath: '/models',
+    authScheme: 'bearer',
+    defaultModel: 'auto/best-coding',
+    freeTier: 'localhost',
+    freeNotes: '60+ free models routed via local OmniRoute dev server. No key needed.',
+    homepage: 'https://github.com/chirag127/OmniRoute'
   }
 ]);
 

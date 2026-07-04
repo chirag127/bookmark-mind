@@ -8,8 +8,8 @@ import {
 
 describe('providers/registry', () => {
   describe('PROVIDERS catalog', () => {
-    it('has 12 built-in providers', () => {
-      expect(PROVIDERS.length).toBe(12)
+    it('has 13 built-in providers', () => {
+      expect(PROVIDERS.length).toBe(13)
     })
 
     it('every provider has required fields', () => {

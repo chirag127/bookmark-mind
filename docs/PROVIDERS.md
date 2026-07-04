@@ -1,6 +1,6 @@
 # BookmarkMind — Providers
 
-BookmarkMind supports any OpenAI-compatible chat API. Twelve providers ship built-in
+BookmarkMind supports any OpenAI-compatible chat API. Thirteen providers ship built-in
 plus an "Add custom" flow for anything else.
 
 ## Built-in providers
@@ -19,6 +19,7 @@ plus an "Add custom" flow for anything else.
 | LM Studio | 🏠 localhost. | `http://localhost:1234/v1` |
 | Ollama | 🏠 localhost. Set `OLLAMA_ORIGINS=chrome-extension://*` env var. | `http://localhost:11434/v1` |
 | LiteLLM Proxy | 🔑 BYOK via self-hosted proxy. | `http://localhost:4000/v1` |
+| OmniRoute | 🏠 localhost. 60+ free models via chirag127/OmniRoute dev server. | `http://localhost:20128/v1` |
 
 ## Adding a provider
 
