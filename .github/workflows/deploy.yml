@@ -40,4 +40,9 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          # Create the Pages project on first run (idempotent — ignore "already exists").
+          preCommands: >-
+            wrangler pages project create bookmark-mind --production-branch=main
+            || echo "project already exists, continuing"
           command: pages deploy public --project-name=bookmark-mind --branch=main
