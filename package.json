@@ -19,6 +19,7 @@
         "package": "node scripts/package.mjs",
         "package:cws": "node scripts/package.mjs",
         "docs": "node scripts/gen-docs.mjs",
+        "site": "node scripts/build-site.mjs",
         "screenshots": "node scripts/screenshots.mjs"
     },
     "repository": {

@@ -1,0 +1,43 @@
+name: deploy
+
+# Build the static site and deploy to Cloudflare Pages (project: bookmark-mind).
+# Custom domain bookmark-mind.oriz.in is bound to this Pages project in the CF dashboard.
+# Requires repo/org secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/build-site.mjs
+      - docs/cws-assets/**
+      - wrangler.toml
+      - .github/workflows/deploy.yml
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Build site
+        run: node scripts/build-site.mjs
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=bookmark-mind --branch=main

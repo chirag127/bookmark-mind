@@ -1,0 +1,47 @@
+name: prerelease
+
+# Package the extension ZIP and attach it to a rolling "prerelease" GitHub Release
+# on every push to main. Uses the repo's own scripts/package.mjs (zips extension/
+# contents with manifest.json at the ZIP root, ready for the Chrome Web Store).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - extension/**
+      - scripts/package.mjs
+      - .github/workflows/prerelease.yml
+  workflow_dispatch:
+
+concurrency:
+  group: prerelease
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  prerelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Package extension ZIP
+        run: |
+          node scripts/package.mjs
+          ls -la dist/
+
+      - name: Publish rolling prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: prerelease
+          name: Latest prerelease build
+          prerelease: true
+          files: dist/*.zip
+          body: |
+            Automated prerelease build of the BookmarkMind extension from the latest `main`.
+            Download the ZIP below and load it unpacked, or upload to the Chrome Web Store.
